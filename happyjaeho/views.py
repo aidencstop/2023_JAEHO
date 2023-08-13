@@ -11,8 +11,8 @@ def main(request):
             return redirect('/member/login/')
         if 'trainer' in request.POST:
             return redirect('/trainer/login/')
-        if 'admin' in request.POST:
-            return redirect('/admin/login/')
+        if 'manager' in request.POST:
+            return redirect('/manager/login/')
 
     return render(
         request,
