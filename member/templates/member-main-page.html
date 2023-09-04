@@ -26,7 +26,10 @@
     <div data-animation="default" data-collapse="medium" data-duration="400" data-easing="ease" data-easing2="ease" role="banner" class="navbar-logo-center-container shadow-three w-nav">
       <div class="container-4">
         <div class="navbar-wrapper-three">
-          <a href="#" class="navbar-brand-three w-nav-brand"><img src="../images/crossfit-forging-elite-fitness.jpeg" loading="lazy" width="199" sizes="(max-width: 479px) 150px, 198.99307250976562px" srcset="../images/crossfit-forging-elite-fitness-p-500.jpeg 500w, ../images/crossfit-forging-elite-fitness-p-800.jpeg 800w, ../images/crossfit-forging-elite-fitness.jpeg 1024w" alt="" class="image"></a>
+          <a href="#" class="navbar-brand-three w-nav-brand">
+<!--            <img src="{% static 'images/crossfit-forging-elite-fitness.jpeg' %}" loading="lazy" width="199" sizes="(max-width: 479px) 150px, 198.99307250976562px" srcset="{% static 'images/crossfit-forging-elite-fitness-p-500.jpeg' %} 500w, {% static 'images/crossfit-forging-elite-fitness-p-800.jpeg' %} 800w, {% static 'images/crossfit-forging-elite-fitness.jpeg' %} 1024w" alt="" class="image">-->
+            <img src="{% static 'images/crossfit-forging-elite-fitness.jpeg' %}" loading="lazy" width="199" sizes="(max-width: 479px) 150px, 198.99307250976562px"  alt="" class="image">
+          </a>
           <nav role="navigation" class="nav-menu-wrapper-three w-nav-menu">
             <div class="nav-menu-three">
               <ul role="list" class="nav-menu-block w-list-unstyled">

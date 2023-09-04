@@ -12,13 +12,13 @@ class UserAdmin(BaseUserAdmin):
 
     # list_display = ('member_id', 'is_admin',)
 
-    list_display = ('member_id', 'is_admin', 'is_active', 'authority', 'name', 'age', 'gender', 'password')
+    list_display = ('member_id', 'is_admin', 'is_active', 'authority', 'name', 'age', 'gender', 'password', 'height')
 
     list_filter = ('is_admin',)
 
     fieldsets = (
         (None, {'fields': ('member_id',)}),
-        ('Personal info', {'fields': ('name', 'age', 'gender',)}),
+        ('Personal info', {'fields': ('name', 'age', 'gender','height',)}),
         ('Management info', {'fields': ('authority', 'password',)}),
         ('Permissions', {'fields': ('is_admin', 'is_active',)}),
     )

@@ -36,7 +36,10 @@
               </ul>
               <ul role="list" class="nav-menu-block w-list-unstyled">
                 <li class="mobile-margin-top-10">
-                  <button type="submit" name="logout" class="get-start-butto w-button">Log out</button>
+                  <button type="submit" name="save" class="get-start-butto w-button">Save</button>
+                </li>
+                <li class="mobile-margin-top-10">
+                  <button type="submit" name="back" class="get-start-butto w-button">Back</button>
                 </li>
               </ul>
             </div>
@@ -52,6 +55,10 @@
     <h1 class="heading-17">  Record Your Workout</h1>
   </section>
   <section class="section-7">
+    <div>
+      <h1 class="heading-18">Today's bodyweight</h1>
+      <input name="bodyweight" type="number" class="form-control" value=70 aria-label="Integer input">
+    </div>
     <div class="w-layout-grid grid-4">
       <div id="w-node-_56abc13b-b603-aad5-a79b-7c00e85ce4e1-08504745">
         <h1 class="heading-18">Workout</h1>
@@ -69,16 +76,20 @@
     {% for workout in workout_list %}
     <div class="w-layout-grid grid-4">
       <div>
-        <h1 class="heading-18">{{ workout.workout }}</h1>
+        <h1 class="heading-18">Workout</h1>
+        <input name="workout" value="{{ workout.workout }}">
       </div>
       <div>
-        <h1 class="heading-18">{{ workout.set }}</h1>
+        <h1 class="heading-18">Set</h1>
+        <input name="set" value="{{ workout.set }}">
       </div>
       <div>
-        <h1 class="heading-18">{{ workout.reps }}</h1>
+        <h1 class="heading-18">Weight</h1>
+        <input name="weight" value="{{ workout.weight }}">
       </div>
       <div>
-        <h1 class="heading-18">{{ workout.weight }}</h1>
+        <h1 class="heading-18">Reps</h1>
+        <input name="reps" value="{{ workout.reps }}">
       </div>
     </div>
     {% endfor %}

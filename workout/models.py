@@ -7,11 +7,12 @@ class Workout(models.Model):
     member_id = models.CharField(max_length=200)
     date = models.DateField()
     workout = models.CharField(max_length=100) # workout's name. bodyweight included
-    set = models.IntegerField(default=5)
+    set = models.IntegerField(default=0)
     weight = models.IntegerField(default=10) # dumbbbell/disk weight
-    reps = models.IntegerField(default=10) # reps or time
+    reps = models.IntegerField(default=10) # reps or timege
     alone_or_group = models.IntegerField(default=0) # alone: 0 / group: 1
     class_pk = models.CharField(max_length=2, default="00")
+    completion_rate = models.IntegerField(default=100)
 
     key_workout_dict = {
         0: "aa",
@@ -79,6 +80,7 @@ class GroupWorkoutClass(models.Model):
     start_time = models.TimeField(max_length=20)
     end_time = models.TimeField(max_length=20)
     class_pk = models.CharField(max_length=2) # mon:1 ~ fri:5 / 1st:1 ~ 4th:4
+    contents = models.CharField(max_length=100, default="") # whatever trainer wants
 
     def __str__(self):
         return str(self.day) + ": " + str(self.start_time) + ": " + str(self.end_time) + ": " + str(self.class_pk)

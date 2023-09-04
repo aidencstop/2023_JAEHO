@@ -56,7 +56,7 @@ class User(AbstractBaseUser):
         choices=(('Male', 'Male'), ('Female', 'Female'))
     )
     height = models.IntegerField(
-        default=70,
+        default=170,
     )
 
     is_active = models.BooleanField(default=True)
