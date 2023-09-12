@@ -129,10 +129,21 @@ def member_history_and_progress(request):
         curr_date_completion_rate_list = [a.completion_rate for a in curr_date_workout_list]
         curr_date_mean_completion_rate = sum(curr_date_completion_rate_list)*1.0/len(curr_date_completion_rate_list)
 
-        if prev_bmi_grade in ['05', '06', '07', '08']:
-            expected_bodyweight = prev_bodyweight - (curr_date_mean_completion_rate/1000.0)
+        trend = 0
+        # calculating trend
+        if idx<3:
+            trend = 0
         else:
-            expected_bodyweight = prev_bodyweight + (curr_date_mean_completion_rate / 1000.0)
+            prev_bodyweight_list = member_alone_bodyweight_list[:idx+1]
+            growth_rate_list = []
+            for i in range(1, idx+1):
+                growth_rate_list.append((prev_bodyweight_list[i]-prev_bodyweight_list[i-1])/prev_bodyweight_list[i-1])
+            trend = sum(growth_rate_list)/len(growth_rate_list)
+
+        if prev_bmi_grade in ['05', '06', '07', '08']:
+            expected_bodyweight = (prev_bodyweight - (curr_date_mean_completion_rate / 1000.0)) * (1+trend)
+        else:
+            expected_bodyweight = (prev_bodyweight + (curr_date_mean_completion_rate / 1000.0)) * (1+trend)
 
         expected_bodyweight_list.append(expected_bodyweight)
 
