@@ -54,12 +54,17 @@
   <section>
     <h1 class="heading-17">  Record Your Workout</h1>
   </section>
-  <section class="section-7">
-    <div>
-      <h1 class="heading-18">Today's bodyweight</h1>
+    <br>
+    <br>
+    <section>
+      <a class="heading-18">Today's bodyweight</a>
       <input name="bodyweight" type="number" class="form-control" value=70 aria-label="Integer input">
-    </div>
+    </section>
+  <section class="section-7">
     <div class="w-layout-grid grid-4">
+<!--      <div>-->
+<!--        <h1 class="heading-18">No.</h1>-->
+<!--      </div>-->
       <div id="w-node-_56abc13b-b603-aad5-a79b-7c00e85ce4e1-08504745">
         <h1 class="heading-18">Workout</h1>
       </div>
@@ -67,30 +72,30 @@
         <h1 class="heading-18">Set</h1>
       </div>
       <div id="w-node-c6ad5a2f-e164-21a6-402d-c2676276f410-08504745">
-        <h1 class="heading-18">Rep</h1>
+        <h1 class="heading-18">Weight</h1>
       </div>
       <div id="w-node-_59bc7fa8-6d5a-7f54-0eaf-6b0b1fabafe6-08504745">
-        <h1 class="heading-18">Weight</h1>
+        <h1 class="heading-18">Rep</h1>
       </div>
     </div>
     {% for workout in workout_list %}
     <div class="w-layout-grid grid-4">
-      <div>
-        <h1 class="heading-18">Workout</h1>
+<!--      <div>-->
+<!--        <h1 class="heading-18">Workout</h1>-->
         <input name="workout" value="{{ workout.workout }}">
-      </div>
-      <div>
-        <h1 class="heading-18">Set</h1>
+<!--      </div>-->
+<!--      <div>-->
+<!--        <h1 class="heading-18">Set</h1>-->
         <input name="set" value="{{ workout.set }}">
-      </div>
-      <div>
-        <h1 class="heading-18">Weight</h1>
+<!--      </div>-->
+<!--      <div>-->
+<!--        <h1 class="heading-18">Weight</h1>-->
         <input name="weight" value="{{ workout.weight }}">
-      </div>
-      <div>
-        <h1 class="heading-18">Reps</h1>
+<!--      </div>-->
+<!--      <div>-->
+<!--        <h1 class="heading-18">Reps</h1>-->
         <input name="reps" value="{{ workout.reps }}">
-      </div>
+<!--      </div>-->
     </div>
     {% endfor %}
   </section>

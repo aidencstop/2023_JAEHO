@@ -37,7 +37,7 @@
               </ul>
               <ul role="list" class="nav-menu-block w-list-unstyled">
                 <li class="mobile-margin-top-10">
-                  <button type="submit" name="logout" class="get-start-butto w-button">Log out</button>
+                  <button type="submit" name="back" class="get-start-butto w-button">Back</button>
                 </li>
               </ul>
             </div>
@@ -64,39 +64,28 @@
 <!--          </a>-->
         </div>
         <div class="w-tab-content">
-          <div data-w-tab="Tab 1" class="w-tab-pane w--tab-active">
             <div class="form-block-2 w-form">
-              <form id="email-form" name="email-form" data-name="Email Form" method="get" class="form-2" data-wf-page-id="64dda0c2e04994ad319e6172" data-wf-element-id="13b9b1d7-094c-b790-bce8-71e5c42730de">
                 <div class="div-block-17"><label for="name" class="field-label-4">Member ID</label>
-                  <input type="text" class="text-field-3 w-input" maxlength="256" name="member_id" data-name="member_id" placeholder="Please enter new member's id">
+                  <input type="text" class="text-field-3 w-input" maxlength="256" name="member_id" data-name="member_id" value="{{ user.member_id }}">
                 </div>
                 <div class="div-block-17"><label for="name-3" class="field-label-4">Authority</label>
-                  <input type="number" class="text-field-3 w-input" maxlength="256" name="authority" data-name="authority" placeholder="Please enter new member's authority(0/1/2)">
+                  <input type="number" class="text-field-3 w-input" maxlength="256" name="authority" data-name="authority" value="{{ user.authority }}">
                 </div>
                 <div class="div-block-17"><label for="name-3" class="field-label-4">Name</label>
-                  <input type="text" class="text-field-3 w-input" maxlength="256" name="name" data-name="name" placeholder="Please enter new member's name">
+                  <input type="text" class="text-field-3 w-input" maxlength="256" name="name" data-name="name" value="{{ user.name }}">
                 </div>
                 <div class="div-block-17"><label for="name-3" class="field-label-4">Age</label>
-                  <input type="number" class="text-field-3 w-input" maxlength="256" name="Age" data-name="Age" placeholder="Please enter new member's age">
+                  <input type="number" class="text-field-3 w-input" maxlength="256" name="age" data-name="Age" value="{{ user.age }}">
                 </div>
                 <div class="div-block-17"><label for="name-3" class="field-label-4">Gender</label>
-                  <input type="text" class="text-field-3 w-input" maxlength="256" name="gender" data-name="gender" placeholder="Please enter new member's gender(Male/Female)">
+                  <input type="text" class="text-field-3 w-input" maxlength="256" name="gender" data-name="gender" value="{{ user.gender }}">
                 </div>
                 <div class="div-block-17"><label for="name-3" class="field-label-4">Height</label>
-                  <input type="number" class="text-field-3 w-input" maxlength="256" name="height" data-name="height" placeholder="Please enter new member's height">
+                  <input type="text" class="text-field-3 w-input" maxlength="256" name="height" data-name="height" value="{{ user.height }}">
                 </div>
-                <input type="submit" value="submit" data-wait="Please wait..." class="sign-up-submit-button w-button">
-              </form>
-              <div class="w-form-done">
-                <div>Thank you! Your submission has been received!</div>
-              </div>
-              <div class="w-form-fail">
-                <div>Oops! Something went wrong while submitting the form.</div>
-              </div>
+                <button type="submit" name="save" data-wait="Please wait..." class="sign-up-submit-button w-button">Save<button>
+
             </div>
-          </div>
-          <div data-w-tab="Tab 2" class="w-tab-pane"></div>
-          <div data-w-tab="Tab 3" class="w-tab-pane"></div>
         </div>
       </div>
     </div>

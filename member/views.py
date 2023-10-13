@@ -152,7 +152,7 @@ def member_history_and_progress(request):
     expected_bodyweight_df = pd.DataFrame(index = member_alone_date_list)
     expected_bodyweight_df['bodyweight_expected'] = expected_bodyweight_list
     total_df = pd.merge(real_bodyweight_df, expected_bodyweight_df, left_index=True, right_index=True, how='left')
-    figure = total_df.plot(kind='line', legend=True).get_figure()
+    figure = total_df.plot(kind='line', legend=True, rot=90).get_figure()
 
     from pathlib import Path
     # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -406,9 +406,23 @@ def member_start_workout_alone(request):
             recommended_workout_dictionary[rw.workout]['set'].append(rw.set)
             recommended_workout_dictionary[rw.workout]['weight'].append(rw.weight)
             recommended_workout_dictionary[rw.workout]['reps'].append(rw.reps)
-    print(recommended_workout_dictionary.keys())
-    recommended_workout = recommended_workout_dictionary.keys()
-    return render(request, 'member-start-workout-alone-recommend-page.html', {'recommended_workout': recommended_workout,'recommended_workout_dictionary':recommended_workout_dictionary,})
+    #print(recommended_workout_dictionary.keys())
+    recommended_workout = list(recommended_workout_dictionary.keys())
+    set_list = []
+    weight_list = []
+    reps_list = []
+    for rw in recommended_workout:
+        set_list.append(recommended_workout_dictionary[rw]['set'])
+        weight_list.append(recommended_workout_dictionary[rw]['weight'])
+        reps_list.append(recommended_workout_dictionary[rw]['reps'])
+    data_list = zip(recommended_workout, set_list, weight_list, reps_list)
+    #print(recommended_workout)
+    #print(recommended_workout_dictionary)
+    return render(request, 'member-start-workout-alone-recommend-page.html',
+                  {'recommended_workout': recommended_workout,
+                   'data_list':data_list,
+                   }
+                  )
 
 @csrf_exempt
 def member_start_workout_group(request):

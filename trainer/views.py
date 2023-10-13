@@ -5,7 +5,7 @@ from workout.models import Workout, GroupWorkoutClass
 from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.hashers import check_password
-
+import pandas as pd
 import os
 from pathlib import Path
 
@@ -89,7 +89,10 @@ def trainer_manage_class(request):
 
 @csrf_exempt
 def trainer_manage_class_detail(request, class_pk):
-    # if request.method == 'POST':
+    if request.method == 'POST':
+        if 'logout' in request.POST:
+            auth.logout(request)
+            return redirect('/')
     #     if 'history_and_progress' in request.POST:
     #
     #         return redirect('/member/history_and_progress/')
@@ -123,7 +126,7 @@ def trainer_member_progress(request):
 
     # 모든 멤버 데려오기
     all_members = User.objects.all().order_by('pk')
-
+    print(all_members)
     return render(request,
                   'trainer-member-progress-page.html',
             {
@@ -137,10 +140,67 @@ def trainer_history_and_progress(request, member_pk):
         if 'back' in request.POST:
             return redirect('/trainer/member_progress/')
     member = User.objects.get(pk=member_pk)
-    #TODO: 여기 그래프 구현해야 함
-    return render(request,
-                  'trainer-member-history-and-progress-page.html',
-                  {
-                      'member': member
-                  },
-    )
+    member_height = member.height
+    member_workout_bodyweight_list = Workout.objects.filter(member_id=member.member_id, workout='bodyweight').order_by('date')
+    member_date_list = [a.date for a in member_workout_bodyweight_list]
+    member_bodyweight_list = [a.reps for a in member_workout_bodyweight_list]
+
+    member_workout_alone_list = Workout.objects.filter(member_id=member.member_id).order_by('date')
+    member_workout_alone_list = [w for w in member_workout_alone_list if w.class_pk[0]=='0']
+    member_workout_alone_wo_bodyweight_list = [a for a in member_workout_alone_list if a.workout !='bodyweight']
+    member_alone_workout_bodyweight_list = Workout.objects.filter(member_id=member.member_id, workout='bodyweight', class_pk='00').order_by('date')
+    member_alone_bodyweight_list = [a.reps for a in member_alone_workout_bodyweight_list]
+    member_alone_date_list = [a.date for a in member_alone_workout_bodyweight_list]
+
+    expected_bodyweight_list = []
+
+    for idx in range(len(member_alone_date_list)):
+        if idx==0:
+            prev_bmi_grade = "04"
+            prev_bodyweight = int(24.9*((int(member_height)/100.0) ** 2))
+        else:
+            prev_date = member_alone_date_list[idx-1]
+            prev_bodyweight = member_alone_bodyweight_list[idx-1]
+            prev_bmi_grade = int(prev_bodyweight) / ((int(member_height)/100.0) ** 2)
+
+        curr_date = member_alone_date_list[idx]
+
+        curr_date_workout_list = [a for a in member_workout_alone_wo_bodyweight_list if a.date==curr_date]
+        print(curr_date)
+        print(curr_date_workout_list)
+        curr_bmi_grade = curr_date_workout_list[0].class_pk
+        curr_date_completion_rate_list = [a.completion_rate for a in curr_date_workout_list]
+        curr_date_mean_completion_rate = sum(curr_date_completion_rate_list)*1.0/len(curr_date_completion_rate_list)
+
+        trend = 0
+        # calculating trend
+        if idx<3:
+            trend = 0
+        else:
+            prev_bodyweight_list = member_alone_bodyweight_list[:idx+1]
+            growth_rate_list = []
+            for i in range(1, idx+1):
+                growth_rate_list.append((prev_bodyweight_list[i]-prev_bodyweight_list[i-1])/prev_bodyweight_list[i-1])
+            trend = sum(growth_rate_list)/len(growth_rate_list)
+
+        if prev_bmi_grade in ['05', '06', '07', '08']:
+            expected_bodyweight = (prev_bodyweight - (curr_date_mean_completion_rate / 1000.0)) * (1+trend)
+        else:
+            expected_bodyweight = (prev_bodyweight + (curr_date_mean_completion_rate / 1000.0)) * (1+trend)
+
+        expected_bodyweight_list.append(expected_bodyweight)
+
+    real_bodyweight_df = pd.DataFrame(index = member_date_list)
+    real_bodyweight_df['bodyweight_real'] = member_bodyweight_list
+    expected_bodyweight_df = pd.DataFrame(index = member_alone_date_list)
+    expected_bodyweight_df['bodyweight_expected'] = expected_bodyweight_list
+    total_df = pd.merge(real_bodyweight_df, expected_bodyweight_df, left_index=True, right_index=True, how='left')
+    figure = total_df.plot(kind='line', legend=True, rot=90).get_figure()
+
+    from pathlib import Path
+    # Build paths inside the project like this: BASE_DIR / 'subdir'.
+    BASE_DIR = Path(__file__).resolve().parent.parent
+
+    figure.savefig(os.path.join(BASE_DIR, 'static') + "/image/figure.png")
+
+    return render(request, 'trainer-member-history-and-progress-page.html')

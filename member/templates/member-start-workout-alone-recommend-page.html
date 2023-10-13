@@ -49,15 +49,15 @@
     <h1 class="heading-29">  Workout Recommendation</h1>
     <div class="w-layout-blockcontainer w-container">
       <div class="div-block-14">
-        <h1 class="heading-30">  Easy Back Workouts</h1>
+        <h1 class="heading-30">  Today's Workouts</h1>
         <div class="w-layout-grid grid-9">
           <h1 id="w-node-_5b15a404-ee3b-b047-c757-aea1610f30e8-f7f06349" class="heading-31">Workout</h1>
           <h1 id="w-node-_4835298a-cf71-b32a-c078-3cd0c461c0ae-f7f06349" class="heading-31">Set</h1>
           <h1 id="w-node-_047da31d-3cd8-2ef6-3160-2ecb5fae1a45-f7f06349" class="heading-31">Time / Rep</h1>
         </div>
-        {% for workout in recommended_workout %}
+        {% for workout, set, weight, reps in data_list %}
         <div>
-          <a class="heading-31">{{ workout }}</a>
+          <h1 class="heading-31">{{ workout }} {{ set }} {{ reps }}</h1>
         </div>
         {% endfor %}
       </div>

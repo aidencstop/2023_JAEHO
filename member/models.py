@@ -76,6 +76,30 @@ class User(AbstractBaseUser):
     def has_module_perms(self, app_label):
         return True
 
+    def setMemberId(self, member_id):
+        self.member_id = member_id
+        self.save()
+
+    def setAuthority(self, authority):
+        self.authority = authority
+        self.save()
+    def setName(self, name):
+        self.name = name
+        self.save()
+
+
+    def setAge(self, age):
+        self.age = age
+        self.save()
+
+    def setGender(self, gender):
+        self.gender = gender
+        self.save()
+
+    def setHeight(self, height):
+        self.height = height
+        self.save()
+
     @property
     def is_staff(self):
         return self.is_admin
