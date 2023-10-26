@@ -5,6 +5,7 @@ from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.hashers import check_password
 from member.forms import CustomUserChangeForm, CustomUserDeleteForm, AdminLoginForm
+from django.contrib import messages
 
 import os
 from pathlib import Path
@@ -13,8 +14,8 @@ from pathlib import Path
 @csrf_exempt
 def manager_login(request):
     if request.method == 'POST':
-        # if 'to_main' in request.POST:
-        #     return redirect('/')
+        if 'back' in request.POST:
+            return redirect('/')
         if 'login' in request.POST:
             member_id = request.POST['id']
             password = request.POST['password']
@@ -24,7 +25,10 @@ def manager_login(request):
                 if check_password(password, user.password) and user.authority>=2:
                     auth.login(request, user)
                     return redirect('/manager/manager_main/', {'user': user})
+                elif user.authority < 2:
+                    messages.error(request, 'You\'re not allowed for manager menu!', extra_tags='')
                 else:
+                    messages.error(request, 'Please enter correct password!', extra_tags='')
                     return redirect('/manager/login/')
             except Exception:
                 pass
@@ -88,20 +92,23 @@ def manager_main(request):
 @csrf_exempt
 def manager_sign_up(request):
     if request.method == 'POST':
-        if 'logout' in request.POST:
-            auth.logout(request)
-            return redirect('/')
+        if 'back' in request.POST:
+
+            return redirect('/manager/manager_main/')
         if 'save' in request.POST:
-            user = User.objects.create_user(
-                member_id=request.POST['member_id'],
-                authority=request.POST['authority'],
-                name=request.POST['name'],
-                age=request.POST['age'],
-                gender=request.POST['gender'],
-                height=request.POST['height'],
-            )
+            if request.POST['password1']==request.POST['password2']:
+                print('okay')
+                user = User.objects.create_user(
+                    member_id=request.POST['member_id'],
+                    password=request.POST['password1'],
+                    authority=request.POST['authority'],
+                    name=request.POST['name'],
+                    age=request.POST['age'],
+                    gender=request.POST['gender'],
+                    height=request.POST['height'],
+                )
             # auth.login(request, user)
-            return redirect('/member/add_a_new_member/')
+            return redirect('/manager/manager_sign_up/')
 
     return render(request, 'manager-sign-up-page.html')
 
@@ -126,12 +133,22 @@ def manager_edit(request):
         #             }
         #         )
     users = User.objects.all().order_by('pk')
-
+    authority_list = []
+    for user in users:
+        if user.authority==0:
+            authority_list.append('Member')
+        elif user.authority==1:
+            authority_list.append('Trainer')
+        else:
+            authority_list.append('Manager')
+    data_list = zip(users, authority_list)
     return render(
         request,
         'manager-edit-page.html',
         {
-            'users': users
+            'users': users,
+            'authorities': authority_list,
+            'data_list': data_list,
         }
     )
 

@@ -11,7 +11,7 @@
   {% load static %}
   <link href="{% static 'css/normalize.css' %}" rel="stylesheet" type="text/css">
   <link href="{% static 'css/webflow.css' %}" rel="stylesheet" type="text/css">
-  <link href="{% static 'css/crossfit-facility-webapp.webflow.css' %}" rel="stylesheet" type="text/css">
+  <link href="{% static 'css/crossfit-facility-webapp-webflow.css' %}" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com" rel="preconnect">
   <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin="anonymous">
   <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js" type="text/javascript"></script>
@@ -27,7 +27,7 @@
     <div data-animation="default" data-collapse="medium" data-duration="400" data-easing="ease" data-easing2="ease" role="banner" class="navbar-logo-center-container shadow-three w-nav">
       <div class="container-4">
         <div class="navbar-wrapper-three">
-          <a href="#" class="navbar-brand-three w-nav-brand"><img src="../images/crossfit-forging-elite-fitness.jpeg" loading="lazy" width="199" sizes="(max-width: 479px) 150px, 199px" alt="" srcset="../images/crossfit-forging-elite-fitness-p-500.jpeg 500w, ../images/crossfit-forging-elite-fitness-p-800.jpeg 800w, ../images/crossfit-forging-elite-fitness.jpeg 1024w" class="image"></a>
+          <a href="#" class="navbar-brand-three w-nav-brand"><img src="{% static 'image/crossfit-forging-elite-fitness.jpeg' %}" width="199" sizes="(max-width: 479px) 150px, 198.99307250976562px" srcset="{% static 'image/crossfit-forging-elite-fitness-p-500.jpeg' %} 500w, {% static 'image/crossfit-forging-elite-fitness-p-800.jpeg' %} 800w, {% static 'image/crossfit-forging-elite-fitness.jpeg' %} 1024w" alt="" class="image"></a>
           <nav role="navigation" class="nav-menu-wrapper-three w-nav-menu">
             <div class="nav-menu-three">
               <ul role="list" class="nav-menu-block w-list-unstyled">
@@ -37,7 +37,7 @@
               </ul>
               <ul role="list" class="nav-menu-block w-list-unstyled">
                 <li class="mobile-margin-top-10">
-                  <button type="submit" name="logout" class="get-start-butto w-button">Log out</button>
+                  <button type="submit" name="back" class="get-start-butto w-button">Back</button>
                 </li>
               </ul>
             </div>
@@ -49,7 +49,9 @@
       </div>
     </div>
   </div>
+      </form>
   <section>
+        <form method="POST"> {% csrf_token %}
     <div class="w-layout-blockcontainer container-17 w-container">
       <div data-current="Tab 1" data-easing="ease" data-duration-in="300" data-duration-out="100" class="w-tabs">
         <div class="w-tab-menu">
@@ -68,31 +70,31 @@
             <div class="form-block-2 w-form">
               <form id="email-form" name="email-form" data-name="Email Form" method="get" class="form-2" data-wf-page-id="64dda0c2e04994ad319e6172" data-wf-element-id="13b9b1d7-094c-b790-bce8-71e5c42730de">
                 <div class="div-block-17"><label for="name" class="field-label-4">Member ID</label>
-                  <input type="text" class="text-field-3 w-input" maxlength="256" name="member_id" data-name="member_id" placeholder="Please enter new member's id">
+                  <input type="text" class="text-field-3 w-input" maxlength="256" name="member_id" data-name="member_id" placeholder="Please enter new member's id" required="">
+                </div>
+                <div class="div-block-17"><label for="name-3" class="field-label-4">Password</label>
+                  <input type="password" class="text-field-3 w-input" maxlength="256" name="password1" data-name="password1" placeholder="Please enter new member's password" required="">
+                </div>
+                <div class="div-block-17"><label for="name-3" class="field-label-4">Password Confirm</label>
+                  <input type="password" class="text-field-3 w-input" maxlength="256" name="password2" data-name="password2" placeholder="Please enter new member's password again" required="">
                 </div>
                 <div class="div-block-17"><label for="name-3" class="field-label-4">Authority</label>
-                  <input type="number" class="text-field-3 w-input" maxlength="256" name="authority" data-name="authority" placeholder="Please enter new member's authority(0/1/2)">
+                  <input type="number" class="text-field-3 w-input" maxlength="256" name="authority" data-name="authority" placeholder="Please enter new member's authority(0: Member / 1: Trainer / 2: Manager)" required="">
                 </div>
                 <div class="div-block-17"><label for="name-3" class="field-label-4">Name</label>
-                  <input type="text" class="text-field-3 w-input" maxlength="256" name="name" data-name="name" placeholder="Please enter new member's name">
+                  <input type="text" class="text-field-3 w-input" maxlength="256" name="name" data-name="name" placeholder="Please enter new member's name" required="">
                 </div>
                 <div class="div-block-17"><label for="name-3" class="field-label-4">Age</label>
-                  <input type="number" class="text-field-3 w-input" maxlength="256" name="Age" data-name="Age" placeholder="Please enter new member's age">
+                  <input type="number" class="text-field-3 w-input" maxlength="256" name="age" data-name="age" placeholder="Please enter new member's age" required="">
                 </div>
                 <div class="div-block-17"><label for="name-3" class="field-label-4">Gender</label>
-                  <input type="text" class="text-field-3 w-input" maxlength="256" name="gender" data-name="gender" placeholder="Please enter new member's gender(Male/Female)">
+                  <input type="text" class="text-field-3 w-input" maxlength="256" name="gender" data-name="gender" placeholder="Please enter new member's gender(Male/Female)" required="">
                 </div>
                 <div class="div-block-17"><label for="name-3" class="field-label-4">Height</label>
-                  <input type="number" class="text-field-3 w-input" maxlength="256" name="height" data-name="height" placeholder="Please enter new member's height">
+                  <input type="number" class="text-field-3 w-input" maxlength="256" name="height" data-name="height" placeholder="Please enter new member's height" required="">
                 </div>
-                <input type="submit" value="submit" data-wait="Please wait..." class="sign-up-submit-button w-button">
+                <button type="submit" name="save" data-wait="Please wait..." class="sign-up-submit-button w-button">Sign Up</button>
               </form>
-              <div class="w-form-done">
-                <div>Thank you! Your submission has been received!</div>
-              </div>
-              <div class="w-form-fail">
-                <div>Oops! Something went wrong while submitting the form.</div>
-              </div>
             </div>
           </div>
           <div data-w-tab="Tab 2" class="w-tab-pane"></div>

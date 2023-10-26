@@ -7,14 +7,15 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.hashers import check_password
 import pandas as pd
 import os
+from django.contrib import messages
 from pathlib import Path
 
 
 @csrf_exempt
 def trainer_login(request):
     if request.method == 'POST':
-        # if 'to_main' in request.POST:
-        #     return redirect('/')
+        if 'back' in request.POST:
+            return redirect('/')
         if 'login' in request.POST:
             member_id = request.POST['id']
             password = request.POST['password']
@@ -24,7 +25,10 @@ def trainer_login(request):
                 if check_password(password, user.password) and user.authority>=1:
                     auth.login(request, user)
                     return redirect('/trainer/trainer_main/', {'user': user})
+                elif user.authority<1:
+                    messages.error(request, 'You\'re not allowed for trainer menu!', extra_tags='')
                 else:
+                    messages.error(request, 'Please enter correct password!', extra_tags='')
                     return redirect('/trainer/login/')
             except Exception:
                 pass
@@ -54,9 +58,9 @@ def trainer_main(request):
 @csrf_exempt
 def trainer_manage_class(request):
     if request.method == 'POST':
-        if 'logout' in request.POST:
+        if 'back' in request.POST:
             auth.logout(request)
-            return redirect('/')
+            return redirect('/trainer/trainer_main/')
     #요일별 클래스 리스트 만들기
     monday_class_list = []
     tuesday_class_list = []
@@ -90,9 +94,9 @@ def trainer_manage_class(request):
 @csrf_exempt
 def trainer_manage_class_detail(request, class_pk):
     if request.method == 'POST':
-        if 'logout' in request.POST:
+        if 'back' in request.POST:
             auth.logout(request)
-            return redirect('/')
+            return redirect('/trainer/manage_class/')
     #     if 'history_and_progress' in request.POST:
     #
     #         return redirect('/member/history_and_progress/')
@@ -111,18 +115,35 @@ def trainer_manage_class_detail(request, class_pk):
             curr_class_workout_list.append(workout)
     print(curr_class.pk)
     print(len(curr_class_workout_list))
+    workout1_set1 = curr_class_workout_list[0]
+    workout1_set2 = curr_class_workout_list[1]
+    workout1_set3 = curr_class_workout_list[2]
+    workout2_set1 = curr_class_workout_list[3]
+    workout2_set2 = curr_class_workout_list[4]
+    workout2_set3 = curr_class_workout_list[5]
+    workout3_set1 = curr_class_workout_list[6]
+    workout3_set2 = curr_class_workout_list[7]
+    workout3_set3 = curr_class_workout_list[8]
     return render(request, 'trainer-manage-class-detail-page.html',
                   {
                       'curr_class': curr_class,
-                      'curr_class_workout_list': curr_class_workout_list
+                      'curr_class_workout_list': curr_class_workout_list,
+                      'workout1_set1': workout1_set1,
+                      'workout1_set2': workout1_set2,
+                      'workout1_set3': workout1_set3,
+                      'workout2_set1': workout2_set1,
+                      'workout2_set2': workout2_set2,
+                      'workout2_set3': workout2_set3,
+                      'workout3_set1': workout3_set1,
+                      'workout3_set2': workout3_set2,
+                      'workout3_set3': workout3_set3,
                   })
 
 @csrf_exempt
 def trainer_member_progress(request):
     if request.method == 'POST':
-        if 'logout' in request.POST:
-            auth.logout(request)
-            return redirect('/')
+        if 'back' in request.POST:
+            return redirect('/trainer/trainer_main/')
 
     # 모든 멤버 데려오기
     all_members = User.objects.all().order_by('pk')
@@ -201,6 +222,9 @@ def trainer_history_and_progress(request, member_pk):
     # Build paths inside the project like this: BASE_DIR / 'subdir'.
     BASE_DIR = Path(__file__).resolve().parent.parent
 
-    figure.savefig(os.path.join(BASE_DIR, 'static') + "/image/figure.png")
+    figure.savefig(os.path.join(BASE_DIR, 'static') + "/images/figure.png")
 
-    return render(request, 'trainer-member-history-and-progress-page.html')
+    return render(request, 'trainer-member-history-and-progress-page.html',
+                  {
+                      'member': member,
+                  })

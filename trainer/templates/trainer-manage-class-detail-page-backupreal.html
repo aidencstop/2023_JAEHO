@@ -1,11 +1,11 @@
 <!DOCTYPE html><!--  This site was created in Webflow. https://www.webflow.com  -->
 <!--  Last Published: Sun Jul 30 2023 05:22:37 GMT+0000 (Coordinated Universal Time)  -->
-<html data-wf-page="64b2cd73a3284e103e0a1327" data-wf-site="64aabb5a9d5b566a4dfebda3">
+<html data-wf-page="64c5e778f22c3195f7e8b139" data-wf-site="64aabb5a9d5b566a4dfebda3">
 <head>
   <meta charset="utf-8">
-  <title>member main</title>
-  <meta content="member main" property="og:title">
-  <meta content="member main" property="twitter:title">
+  <title>trainer manage class detail page</title>
+  <meta content="trainer manage class detail page" property="og:title">
+  <meta content="trainer manage class detail page" property="twitter:title">
   <meta content="width=device-width, initial-scale=1" name="viewport">
   <meta content="Webflow" name="generator">
   {% load static %}
@@ -20,16 +20,20 @@
   <link href="{% static 'images/favicon.ico' %}" rel="shortcut icon" type="image/x-icon">
   <link href="{% static 'images/webclip.png' %}" rel="apple-touch-icon">
 </head>
-<body class="startworkout-body">
+<body class="body-14">
   <form method="POST"> {% csrf_token %}
-  <section>
+  <div class="navbar-logo-center">
     <div data-animation="default" data-collapse="medium" data-duration="400" data-easing="ease" data-easing2="ease" role="banner" class="navbar-logo-center-container shadow-three w-nav">
       <div class="container-4">
         <div class="navbar-wrapper-three">
-          <a href="#" class="navbar-brand-three w-nav-brand"><img src="{% static 'images/crossfit-forging-elite-fitness.jpeg' %}" width="199" sizes="(max-width: 479px) 150px, 198.99307250976562px" srcset="{% static 'images/crossfit-forging-elite-fitness-p-500.jpeg' %} 500w, {% static 'images/crossfit-forging-elite-fitness-p-800.jpeg' %} 800w, {% static 'images/crossfit-forging-elite-fitness.jpeg' %} 1024w" alt="" class="image"></a>
+          <a href="#" class="navbar-brand-three w-nav-brand"><img src="{% static 'images/crossfit-forging-elite-fitness.jpeg' %}" width="199" sizes="(max-width: 479px) 150px, 198.99307250976562px" srcset="{% static 'images/crossfit-forging-elite-fitness-p-500.jpeg' %} 500w, {% static 'images/crossfit-forging-elite-fitness-p-800.jpeg' %} 800w, {% static 'image/crossfit-forging-elite-fitness.jpeg' %} 1024w" alt="" class="image"></a>
           <nav role="navigation" class="nav-menu-wrapper-three w-nav-menu">
             <div class="nav-menu-three">
-              <ul role="list" class="nav-menu-block w-list-unstyled"></ul>
+              <ul role="list" class="nav-menu-block w-list-unstyled">
+                <li></li>
+                <li></li>
+                <li></li>
+              </ul>
               <ul role="list" class="nav-menu-block w-list-unstyled">
                 <li class="mobile-margin-top-10">
                   <button type="submit" name="back" class="get-start-butto w-button">Back</button>
@@ -43,26 +47,33 @@
         </div>
       </div>
     </div>
-  </section>
-  <div class="w-layout-blockcontainer w-container">
-    <h1 class="heading-7">  Start Workout</h1>
   </div>
+  <section>
+    <div class="w-layout-blockcontainer container-22 w-container">
+    <h1 class="heading-13">  Manage Class</h1>
+    </div>
+<!--    <div>{{curr_class.class_pk}}</div>-->
+    <div class="w-layout-blockcontainer w-container">
+      <div class="div-block-13 w-clearfix">
+        <ul role="list" class="list w-list-unstyled">
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+        </ul>
+        <a href="#" class="button-14 w-button">ADD</a>
+        <a href="#" class="button-14 w-button">delete</a>
+        <a href="#" class="submit-class-button w-button">save</a>
+        {% for curr_class_workout in curr_class_workout_list %}
+        <div>
+          {{curr_class_workout.workout}}
+        </div>
+        {% endfor %}
+      </div>
 
-  <section class="section-6">
-    <div data-w-id="fbb4733f-1275-8b4a-27a1-f471aad56624" class="w-layout-blockcontainer container-6 w-clearfix w-container">
-      <h1 class="heading-15">  Group Workout</h1>
-      <p class="paragraph-4">Join the class you want right now! You can book a class you want and let the trainer know that you will be there! The amount of calories you&#x27;ve burnt in class will affect your expected muscles gain and fat loss!</p>
-      <button type="submit" name="start_workout_group" class="check-progress-button w-button">Start now</button>
     </div>
   </section>
-  <section class="section-6">
-    <div data-w-id="78275b94-dafd-2683-5edd-52192eb32320" class="w-layout-blockcontainer container-6 w-clearfix w-container">
-      <h1 class="heading-15">  Workout Alone</h1>
-      <p class="paragraph-4">Get automatic workout routine recommendation based on your physical information and your goal!</p>
-      <button type="submit" name="start_workout_alone" class="check-progress-button w-button">Start now</button>
-    </div>
-  </section>
-
   <script src="https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=64aabb5a9d5b566a4dfebda3" type="text/javascript" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
   <script src="{% static 'js/webflow.js' %}" type="text/javascript"></script>
   </form>

@@ -3,7 +3,7 @@ from django.contrib.auth.models import (BaseUserManager, AbstractBaseUser)
 
 
 class UserManager(BaseUserManager):
-    def create_user(self, member_id, authority=None, name=None, age=None, gender=None, password=None):
+    def create_user(self, member_id, authority=None, name=None, age=None, gender=None, password=None, height=None):
         if not member_id:
             raise ValueError('Users must have an member_id.')
 
@@ -18,6 +18,8 @@ class UserManager(BaseUserManager):
             user.age = age
         if gender:
             user.gender = gender
+        if height:
+            user.height = height
 
         user.set_password(password)
         user.save(using=self._db)
