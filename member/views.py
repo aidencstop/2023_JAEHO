@@ -58,9 +58,11 @@ def member_main(request):
             today_day = str(datetime.datetime.today().day)
             today = datetime.date(year=int(today_year), month=int(today_month), day=int(today_day))
             today_workout_record_list = Workout.objects.filter(date=today)
+            print(len(today_workout_record_list))
             user = auth.get_user(request)
+            print(user.member_id)
             user_today_workout_record_list = [a for a in today_workout_record_list if a.member_id == user.member_id]
-
+            print(user_today_workout_record_list)
             if len(user_today_workout_record_list)>0:
                 #TODO: 여기에 오늘 운동 이미 정해졌으니 record로 가라는 메시지
                 messages.error(request, 'You\'ve done workout already today!', extra_tags='')
