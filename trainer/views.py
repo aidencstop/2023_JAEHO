@@ -27,11 +27,13 @@ def trainer_login(request):
                     return redirect('/trainer/trainer_main/', {'user': user})
                 elif user.authority<1:
                     messages.error(request, 'You\'re not allowed for trainer menu!', extra_tags='')
+                    return redirect('/trainer/login/')
                 else:
                     messages.error(request, 'Please enter correct password!', extra_tags='')
                     return redirect('/trainer/login/')
             except Exception:
-                pass
+                messages.error(request, 'Please enter correct ID!', extra_tags='')
+                return redirect('/trainer/login/')
                 # TODO:should deal with invalid user case
 
             return redirect('/trainer/login/')

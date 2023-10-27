@@ -27,11 +27,13 @@ def manager_login(request):
                     return redirect('/manager/manager_main/', {'user': user})
                 elif user.authority < 2:
                     messages.error(request, 'You\'re not allowed for manager menu!', extra_tags='')
+                    return redirect('/manager/login/')
                 else:
                     messages.error(request, 'Please enter correct password!', extra_tags='')
                     return redirect('/manager/login/')
             except Exception:
-                pass
+                messages.error(request, 'Please enter correct ID!', extra_tags='')
+                return redirect('/manager/login/')
                 # TODO:should deal with invalid user case
 
             return redirect('/manager/login/')

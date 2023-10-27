@@ -35,8 +35,8 @@ def member_login(request):
                     messages.error(request, 'Please enter correct password!', extra_tags='')
                     return redirect('/member/login/')
             except Exception:
-                pass
-                # TODO:should deal with invalid user case
+                messages.error(request, 'Please enter correct ID!', extra_tags='')
+                return redirect('/member/login/')
 
             return redirect('/member/login/')
 
@@ -70,7 +70,7 @@ def member_main(request):
             all_workouts = Workout.objects.all().order_by('date')
             user_workouts = [a for a in all_workouts if a.member_id == user.member_id]
             last_date = user_workouts[-1].date  # type: datetime.date
-            
+
             # 오늘 날짜 산출
             today_year = str(datetime.datetime.today().year)
             today_month = str(datetime.datetime.today().month)
