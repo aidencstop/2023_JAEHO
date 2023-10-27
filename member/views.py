@@ -58,17 +58,24 @@ def member_main(request):
             today_day = str(datetime.datetime.today().day)
             today = datetime.date(year=int(today_year), month=int(today_month), day=int(today_day))
             today_workout_record_list = Workout.objects.filter(date=today)
-            if len(today_workout_record_list)>0:
+            user = auth.get_user(request)
+            user_today_workout_record_list = [a for a in today_workout_record_list if a.member_id == user.member_id]
+
+            if len(user_today_workout_record_list)>0:
                 #TODO: 여기에 오늘 운동 이미 정해졌으니 record로 가라는 메시지
                 messages.error(request, 'You\'ve done workout already today!', extra_tags='')
                 return redirect('/member/member_main/')
             else:
                 return redirect('/member/start_workout/')
+
         if 'record' in request.POST:
             # 유저의 마지막 운동 기록으로부터 마지막 운동 일자 추출
             user = auth.get_user(request)
             all_workouts = Workout.objects.all().order_by('date')
             user_workouts = [a for a in all_workouts if a.member_id == user.member_id]
+            if len(user_workouts)==0:
+                messages.error(request, 'You have no workout record!', extra_tags='')
+                return redirect('/member/member_main/')
             last_date = user_workouts[-1].date  # type: datetime.date
 
             # 오늘 날짜 산출

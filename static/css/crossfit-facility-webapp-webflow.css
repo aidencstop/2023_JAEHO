@@ -2951,7 +2951,7 @@ body {
   border: 1px solid #fff;
   border-radius: 7px;
   grid-template-rows: auto;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   margin-top: 5px;
   padding-bottom: 10px;
   padding-left: 10px;
@@ -2963,7 +2963,7 @@ body {
   border-bottom-style: solid;
   border-radius: 2px;
   grid-template-rows: 40px;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
 }
 
 .heading-workout {
@@ -3326,7 +3326,7 @@ body {
 .heading-workout-content-invisible {
   width: auto;
   height: auto;
-  color: #fff;
+  color: rgba(0, 0, 0, 0);
   text-align: center;
   letter-spacing: 2px;
   text-transform: uppercase;
@@ -3335,6 +3335,10 @@ body {
   padding-bottom: 5px;
   font-size: 14px;
   font-weight: 400;
+}
+
+.heading-39-copy {
+  color: rgba(0, 0, 0, 0);
 }
 
 .container-centered {
