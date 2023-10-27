@@ -160,14 +160,19 @@ def manager_edit_form(request, pk):
         if 'back' in request.POST:
             return redirect('/manager/manager_edit/')
         if 'save' in request.POST:
-            user = User.objects.get(pk=pk)
-            user.setMemberId(request.POST['member_id'])
-            user.setAuthority(request.POST['authority'])
-            user.setName(request.POST['name'])
-            user.setAge(request.POST['age'])
-            user.setGender(request.POST['gender'])
-            user.setHeight(request.POST['height'])
-            return redirect('/manager/manager_edit_form/' + str(pk) + '/')
+            try:
+                user = User.objects.get(pk=pk)
+                user.setMemberId(request.POST['member_id'])
+                user.setAuthority(request.POST['authority'])
+                user.setName(request.POST['name'])
+                user.setAge(request.POST['age'])
+                user.setGender(request.POST['gender'])
+                user.setHeight(request.POST['height'])
+                messages.error(request, 'Successfully saved!', extra_tags='')
+                return redirect('/manager/manager_edit_form/' + str(pk) + '/')
+            except Exception:
+                messages.error(request, 'Oop! Save failed.', extra_tags='')
+                return redirect('/manager/manager_edit_form/' + str(pk) + '/')
 
     user = User.objects.get(pk=pk)
     return render(

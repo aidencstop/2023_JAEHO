@@ -149,11 +149,12 @@ def trainer_member_progress(request):
 
     # 모든 멤버 데려오기
     all_members = User.objects.all().order_by('pk')
-    print(all_members)
+    guest_members = [m for m in all_members if m.authority==0]
+    # print(guest_members)
     return render(request,
                   'trainer-member-progress-page.html',
             {
-                'member_list': all_members
+                'member_list': guest_members,
             }
     )
 
