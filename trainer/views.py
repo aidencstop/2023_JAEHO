@@ -219,7 +219,7 @@ def trainer_history_and_progress(request, member_pk):
     expected_bodyweight_df = pd.DataFrame(index = member_alone_date_list)
     expected_bodyweight_df['bodyweight_expected'] = expected_bodyweight_list
     total_df = pd.merge(real_bodyweight_df, expected_bodyweight_df, left_index=True, right_index=True, how='left')
-    figure = total_df.plot(kind='line', legend=True, rot=90).get_figure()
+    figure = total_df.plot(kind='line', legend=True, rot=45, fontsize=6).get_figure()
 
     from pathlib import Path
     # Build paths inside the project like this: BASE_DIR / 'subdir'.

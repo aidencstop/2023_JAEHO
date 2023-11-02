@@ -17,6 +17,7 @@ from django.contrib import messages
 import os
 from pathlib import Path
 
+
 @csrf_exempt
 def member_login(request):
     if request.method == 'POST':
@@ -41,6 +42,7 @@ def member_login(request):
             return redirect('/member/login/')
 
     return render(request, 'member-login-page.html')
+
 
 @csrf_exempt
 def member_main(request):
@@ -103,6 +105,7 @@ def member_main(request):
 
     return render(request, 'member-main-page.html')
 
+
 @csrf_exempt
 def member_history_and_progress(request):
     if request.method == 'POST':
@@ -164,7 +167,8 @@ def member_history_and_progress(request):
     expected_bodyweight_df = pd.DataFrame(index = member_alone_date_list)
     expected_bodyweight_df['bodyweight_expected'] = expected_bodyweight_list
     total_df = pd.merge(real_bodyweight_df, expected_bodyweight_df, left_index=True, right_index=True, how='left')
-    figure = total_df.plot(kind='line', legend=True, rot=45).get_figure()
+
+    figure = total_df.plot(kind='line', legend=True, rot=45, fontsize=6).get_figure()
 
     from pathlib import Path
     # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -175,6 +179,7 @@ def member_history_and_progress(request):
     return render(request, 'member-history-and-progress-page.html', {
         'member': member,
     })
+
 
 @csrf_exempt
 def member_start_workout(request):
@@ -233,10 +238,27 @@ def member_start_workout(request):
                 return redirect('/member/start_workout/')
             else:
                 return redirect('/member/start_workout_group/')
+
     return render(request, 'member-start-workout-page.html')
 
 @csrf_exempt
 def member_start_workout_alone(request):
+    # 잘못된 경로로 접속하는 것 방지
+    today_year = str(datetime.datetime.today().year)
+    today_month = str(datetime.datetime.today().month)
+    today_day = str(datetime.datetime.today().day)
+    today = datetime.date(year=int(today_year), month=int(today_month), day=int(today_day))
+    today_workout_record_list = Workout.objects.filter(date=today)
+    print(len(today_workout_record_list))
+    user = auth.get_user(request)
+    print(user.member_id)
+    user_today_workout_record_list = [a for a in today_workout_record_list if a.member_id == user.member_id]
+    print(user_today_workout_record_list)
+    if len(user_today_workout_record_list) > 0:
+        # TODO: 여기에 오늘 운동 이미 정해졌으니 record로 가라는 메시지
+        messages.error(request, 'You\'ve done workout already today!', extra_tags='')
+        return redirect('/member/member_main/')
+
     if request.method == 'POST':
         if 'OK' in request.POST:
             return redirect('/member/member_main/')
@@ -469,6 +491,22 @@ def member_start_workout_alone(request):
 
 @csrf_exempt
 def member_start_workout_group(request):
+    # 잘못된 경로로 접속하는 것 방지
+    today_year = str(datetime.datetime.today().year)
+    today_month = str(datetime.datetime.today().month)
+    today_day = str(datetime.datetime.today().day)
+    today = datetime.date(year=int(today_year), month=int(today_month), day=int(today_day))
+    today_workout_record_list = Workout.objects.filter(date=today)
+    # print(len(today_workout_record_list))
+    user = auth.get_user(request)
+    # print(user.member_id)
+    user_today_workout_record_list = [a for a in today_workout_record_list if a.member_id == user.member_id]
+    # print(user_today_workout_record_list)
+    if len(user_today_workout_record_list) > 0:
+        # TODO: 여기에 오늘 운동 이미 정해졌으니 record로 가라는 메시지
+        messages.error(request, 'You\'ve done workout already today!', extra_tags='')
+        return redirect('/member/member_main/')
+
     if request.method == 'POST':
         if 'back' in request.POST:
             return redirect('/member/start_workout/')
@@ -608,6 +646,22 @@ def member_record(request):
 
 @csrf_exempt
 def member_start_workout_group_booked(request, class_pk):
+    # 잘못된 경로로 접속하는 것 방지
+    today_year = str(datetime.datetime.today().year)
+    today_month = str(datetime.datetime.today().month)
+    today_day = str(datetime.datetime.today().day)
+    today = datetime.date(year=int(today_year), month=int(today_month), day=int(today_day))
+    today_workout_record_list = Workout.objects.filter(date=today)
+    # print(len(today_workout_record_list))
+    user = auth.get_user(request)
+    # print(user.member_id)
+    user_today_workout_record_list = [a for a in today_workout_record_list if a.member_id == user.member_id]
+    # print(user_today_workout_record_list)
+    if len(user_today_workout_record_list) > 0:
+        # TODO: 여기에 오늘 운동 이미 정해졌으니 record로 가라는 메시지
+        messages.error(request, 'You\'ve done workout already today!', extra_tags='')
+        return redirect('/member/member_main/')
+
     #TODO: 시간에 따라 ok / nope 나누어야 함
     if request.method == 'POST':
         if 'ok' in request.POST:
@@ -641,10 +695,13 @@ def member_start_workout_group_booked(request, class_pk):
         if 'back' in request.POST:
             return redirect('/member/start_workout_group/')
 
+
     all_group_workout_class = GroupWorkoutClass.objects.all().order_by('class_pk')
     selected_group_workout_class = None
     for gwc in all_group_workout_class:
-        if class_pk==gwc.class_pk:
+        # print(type(class_pk))
+        # print(type(gwc.class_pk))
+        if str(class_pk)==gwc.class_pk:
             selected_group_workout_class=gwc
 
     today_month = datetime.datetime.today().month

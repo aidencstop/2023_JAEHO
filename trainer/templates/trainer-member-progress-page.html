@@ -51,25 +51,25 @@
   </section>
   <section>
     <div class="w-layout-blockcontainer container-14 w-container">
-          <h1 class="heading-record-your-workout">  Member List - Check Members' Progress</h1>
+          <h1 class="heading-record-your-workout">Member List - Check Members' Progress</h1>
     </div>
     <div class="w-layout-blockcontainer container-14 w-container">
       <div class="w-form">
         <form id="email-form" name="email-form" data-name="Email Form" method="get" data-wf-page-id="653811d47729cd70dc04cc98" data-wf-element-id="a61fae0f-e8fa-4f4c-914c-cbac23d11d63">
-          <div class="record-workout-div-block">
-            <div class="w-layout-grid wst-table-copy">
-              <h1 id="w-node-_437c0c1a-3d74-f30b-f79d-65d87b05ede0-dc04cc98" class="record-heading-1">Name</h1>
-              <h1 id="w-node-_437c0c1a-3d74-f30b-f79d-65d87b05ede2-dc04cc98" class="record-heading-1">Age</h1>
-              <h1 id="w-node-cb15b970-5b20-3a75-d2fb-2dcde464b15c-dc04cc98" class="record-heading-1">Progress</h1>
+          <div class="manager_user_list_div_block">
+            <div class="w-layout-grid manager_user_list_wst_table">
+              <h1 id="w-node-_437c0c1a-3d74-f30b-f79d-65d87b05ede0-dc04cc98" class="manager_user_list_heading">Name</h1>
+              <h1 id="w-node-_437c0c1a-3d74-f30b-f79d-65d87b05ede2-dc04cc98" class="manager_user_list_heading">Age</h1>
+              <h1 id="w-node-cb15b970-5b20-3a75-d2fb-2dcde464b15c-dc04cc98" class="manager_user_list_heading">Progress</h1>
               {% for member in member_list %}
               <div id="w-node-_064535a3-bada-a5ec-ad3f-2d0988352e0d-dc04cc98" class="user-list-div-block">
-                <h1 class="member-record-font-visible">{{ member.name }}</h1>
+                <h1 class="manager_user_list_font">{{ member.name }}</h1>
               </div>
               <div id="w-node-_6cff5cb3-5b0e-0964-046b-db3bde2da607-dc04cc98" class="user-list-div-block">
-                <h1 class="member-record-font-visible">{{ member.age }}</h1>
+                <h1 class="manager_user_list_font">{{ member.age }}</h1>
               </div>
               <div id="w-node-e69aef57-3623-7549-515b-bc3a40a2510f-dc04cc98" class="user-list-div-block w-clearfix">
-                <a href="/trainer/history_and_progress/{{ member.pk }}/" class="edit-user-button w-button">Member Progress</a>
+                <a href="/trainer/history_and_progress/{{ member.pk }}/" class="edit-user-button w-button">Check</a>
               </div>
               {% endfor %}
             </div>
