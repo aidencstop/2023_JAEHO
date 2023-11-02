@@ -48,7 +48,7 @@
       </div>
     </div>
   </div>
-  <div class="form-block w-form">
+  <div class="w-layout-blockcontainer login_container w-container">
     <div>
       <h1 class="heading-3">Trainer Login</h1>
     </div>
@@ -56,13 +56,7 @@
       <input type="text" class="text-field-2 w-input" autofocus="true" maxlength="256" name="id" data-name="Name" placeholder="Enter your ID" id="name">
       <label for="Password" class="field-label-2">PASSWORD</label>
       <input type="password" class="text-field-2 w-input" maxlength="256" name="password" data-name="Password" placeholder="Enter your password" id="Password">
-    <button type="submit" name="login" data-wait="Please wait..." data-w-id="03d4bb5f-d699-0fad-971a-3e0697d0a95c" class="submit-button w-button">Login</button>
-    <div class="w-form-done">
-      <div>Thank you! Your submission has been received!</div>
-    </div>
-    <div class="w-form-fail">
-      <div>Oops! Something went wrong while submitting the form.</div>
-    </div>
+    <button type="submit" name="login" data-wait="Please wait..." data-w-id="03d4bb5f-d699-0fad-971a-3e0697d0a95c" class="login_button w-button">Login</button>
     {% if messages %}
     {% for message in messages %}
         <div class="row" style="margin:20px auto;">
