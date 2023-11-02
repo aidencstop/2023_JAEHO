@@ -82,6 +82,8 @@ def member_main(request):
                 return redirect('/member/member_main/')
             last_date = user_workouts[-1].date  # type: datetime.date
 
+
+
             # 오늘 날짜 산출
             today_year = str(datetime.datetime.today().year)
             today_month = str(datetime.datetime.today().month)
@@ -89,7 +91,7 @@ def member_main(request):
             today = datetime.date(year=int(today_year), month=int(today_month), day=int(today_day))
 
             # 오늘 몸무게 기록 가져오기
-            today_bodyweight_record = Workout.objects.filter(date=last_date, workout='bodyweight')
+            today_bodyweight_record = Workout.objects.filter(date=last_date, member_id=user.member_id, workout='bodyweight')
 
             # 오늘 운동 기록 있고, 몸무게 기록 없으면 record 페이지로 이동
             if today == last_date and len(today_bodyweight_record)==0:
