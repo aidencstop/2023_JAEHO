@@ -676,7 +676,7 @@ def member_start_workout_group_booked(request, class_pk):
             target_day = str(datetime.datetime.today().day)
 
             newly_created_workout_list = []
-            class_pk_workout_list = Workout.objects.filter(class_pk=class_pk).order_by('workout', 'set')
+            class_pk_workout_list = Workout.objects.filter(class_pk=class_pk, member_id='0000').order_by('workout', 'set')
             print(len(class_pk_workout_list))
             for class_pk_workout in class_pk_workout_list:
                 newly_created_workout = Workout.objects.create(
