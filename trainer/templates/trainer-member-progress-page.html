@@ -53,6 +53,13 @@
     <div class="w-layout-blockcontainer container-14 w-container">
           <h1 class="heading-record-your-workout">Member List - Check Members' Progress</h1>
     </div>
+    {% if messages %}
+    {% for message in messages %}
+    <div class="w-layout-blockcontainer w-container">
+      <p class="paragraph">{{ message.message }}</p>
+    </div>
+    {% endfor %}
+    {% endif %}
     <div class="w-layout-blockcontainer container-14 w-container">
       <div class="w-form">
         <form id="email-form" name="email-form" data-name="Email Form" method="get" data-wf-page-id="653811d47729cd70dc04cc98" data-wf-element-id="a61fae0f-e8fa-4f4c-914c-cbac23d11d63">
