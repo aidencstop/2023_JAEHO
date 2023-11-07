@@ -168,7 +168,7 @@ def trainer_history_and_progress(request, member_pk):
     member_alone_bodyweight_list = Workout.objects.filter(member_id=member.member_id, workout='bodyweight', class_pk='00')
 
     if len(member_alone_bodyweight_list) < 3:
-        messages.error(request, 'You need personal workout record for at least 3 days to get a progress report!',
+        messages.error(request, 'This member hasn\'t yet recorded personal workout for 3 days.',
                        extra_tags='')
         return redirect('/trainer/member_progress/')
 
