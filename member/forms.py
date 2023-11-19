@@ -33,7 +33,7 @@ class UserCreationForm(forms.ModelForm):
 class CustomUserChangeForm(UserChangeForm):
     class Meta:
         model = get_user_model()
-        fields = ('member_id', 'authority', 'name', 'age', 'gender','height')
+        fields = ('member_id', 'authority', 'name', 'age', 'gender', 'height', 'password')
 
 
 class CustomUserDeleteForm(UserChangeForm):
